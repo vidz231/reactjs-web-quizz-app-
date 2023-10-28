@@ -25,11 +25,11 @@ const theme = createTheme({
  * @param text,type,isSubmit
  * @returns
  */
-export default function CustomButton({ text, type, isSubmit }) {
+export default function CustomButton({ text, type, isSubmit, onClick }) {
   return (
     <Box>
       <ThemeProvider theme={theme}>
-        <Button type={type} variant="outlined" color={isSubmit ? 'green' : 'orange'}>
+        <Button type={type} variant="outlined" onClick={onClick} color={isSubmit ? 'green' : 'orange'}>
           {text}
         </Button>
       </ThemeProvider>

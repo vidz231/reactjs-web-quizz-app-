@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import CustomQuizCard from './CustomQuizCard';
 // import Clock from './Clock';
 import ResultUI from './Modal';
+import CustomButton from '../../component/CustomButton';
 // import LinearDeterminate from '../../component/SliderProgress';
 const Clock = lazy(() => import('./Clock'));
 const LinearDeterminate = lazy(() => import('../../component/SliderProgress'));
@@ -22,7 +23,7 @@ export default function ScreenQuiz() {
       nav('/');
     }
     if (quizzKey === undefined) {
-      nav('/');
+      nav('*');
     }
   }, [nav, quizzKey]);
 
@@ -33,7 +34,7 @@ export default function ScreenQuiz() {
         setMaxMark(Object.keys(data.lsQuizz).length);
       });
     });
-  }, [quizzKey]);
+  }, [quizzKey, nav]);
 
   const HandleChoice = (answer) => {
     setAnswers((prev) => {
@@ -119,9 +120,10 @@ export default function ScreenQuiz() {
         </Box>
       </Container>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button onClick={HandleSubmit}>click me to submit</Button>
+        {/* <Button onClick={HandleSubmit}>click me to submit</Button> */}
+        <CustomButton type="button" text={'submit'} onClick={HandleSubmit} />
       </Box>
-      <ResultUI answers={answers} maxMark={maxMark} displayResult={isDisplay} />;
+      <ResultUI answers={answers} maxMark={maxMark} displayResult={isDisplay} isSubmit={true} />;
       {/* <input type="submit" value="handin" /> */}
     </div>
   );

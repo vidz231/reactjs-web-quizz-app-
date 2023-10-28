@@ -4,10 +4,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ScreenQuiz from './layout/ScreenQuiz/ScreenQuiz';
 import { Box } from '@mui/material';
 import ErrorPage from './component/ErrorPage';
+import PassedOrFailedBox from './component/PassedOrFailedBox';
 
 export default function App() {
   return (
     <Box sx={{ bgcolor: '#D5CCE5' }}>
+      <PassedOrFailedBox />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ScreenHome />} />
