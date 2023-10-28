@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import ScreenHome from './layout/ScreenHome/ScreenHome';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ScreenQuiz from './layout/ScreenQuiz/ScreenQuiz';
+import { Box } from '@mui/material';
+import ErrorPage from './component/ErrorPage';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ bgcolor: '#D5CCE5' }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ScreenHome />} />
+          <Route path="/quizz" element={<ErrorPage />} />
+          <Route path="/quizz/:quizzKey" element={<ScreenQuiz />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Box>
   );
 }
-
-export default App;
