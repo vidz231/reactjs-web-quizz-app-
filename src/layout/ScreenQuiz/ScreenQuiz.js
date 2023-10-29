@@ -1,6 +1,6 @@
 import { Box, Container, Skeleton, Typography } from '@mui/material';
-import React, { lazy, useEffect, useLayoutEffect, useState, Suspense } from 'react';
-import { json, useNavigate, useParams } from 'react-router-dom';
+import React, { lazy, useEffect, useState, Suspense } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 // import CustomQuizCard from './CustomQuizCard';

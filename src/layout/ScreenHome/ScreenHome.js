@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomButton from '../../component/CustomButton';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../../component/CustomTextField';
 import { KEY } from '../../const/Domain';
 
@@ -11,7 +11,6 @@ export default function ScreenHome() {
   const [key, setKey] = useState('');
   const [isLogin, setIsLogin] = useState(false);
   const nav = useNavigate();
-  const isFirstRenderRef = useRef(true);
   const [count, setCount] = useState(0);
 
   //check if the user has the key to access the quiz or not, if not, redirect to the home page
@@ -54,6 +53,8 @@ export default function ScreenHome() {
     } else {
       setIsValid(false);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
   return (

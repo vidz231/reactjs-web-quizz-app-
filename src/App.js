@@ -2,7 +2,7 @@ import React from 'react';
 import ScreenHome from './layout/ScreenHome/ScreenHome';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ScreenQuiz from './layout/ScreenQuiz/ScreenQuiz';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import ErrorPage from './component/ErrorPage';
 
 export default function App() {

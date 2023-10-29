@@ -38,7 +38,7 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
   const [isPassed, setIsPassed] = useState(true);
   const [percentage, setPercentage] = useState(0);
   useEffect(() => {
-    let key = localStorage.getItem('quizzKey');
+    localStorage.getItem('quizzKey');
   }, []);
   // calculate the percentage of the quiz that the user has answered
   useEffect(() => {
@@ -57,6 +57,7 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
         setMark(Number(res));
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayResult]);
 
   useEffect(() => {
