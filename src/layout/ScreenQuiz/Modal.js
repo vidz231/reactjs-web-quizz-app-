@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PassedOrFailedBox from '../../component/PassedOrFailedBox';
+import CircularProgressBar from '../../component/CircularProgressBar';
 
 const style = {
   position: 'absolute',
@@ -33,8 +34,16 @@ const style = {
  * @returns: JSX.Element
  */
 export default function ResultUI({ answers, maxMark, displayResult }) {
-  const [mark, setMark] = useState(0);
+  const [mark, setMark] = useState(null);
   const [isPassed, setIsPassed] = useState(true);
+  const [percentage, setPercentage] = useState(0);
+  useEffect(() => {
+    let key = localStorage.getItem('quizzKey');
+  }, []);
+  // calculate the percentage of the quiz that the user has answered
+  useEffect(() => {
+    setPercentage(Math.round((mark / maxMark) * 100));
+  }, [mark, maxMark]);
   /**
    * @description: get the result from the backend and set the mark for the quiz
    * @author: Vi Le
@@ -42,11 +51,19 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
    */
   useEffect(() => {
     import('./QuizService').then((fn) => {
-      fn.getTempResult(answers).then((res) => {
-        setMark(res.mark);
+      let quizzKey = localStorage.getItem('examPw');
+
+      fn.getResult(answers.slice(1), quizzKey).then((res) => {
+        setMark(Number(res));
       });
     });
-  }, [answers]);
+  }, [displayResult]);
+
+  useEffect(() => {
+    if (mark !== null) {
+      localStorage.clear();
+    }
+  }, [mark]);
   /**
    * @description: check if the user has passed the quiz or not and set the result for the quiz
    * @author: Vi Le
@@ -63,10 +80,10 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {/* {JSON.stringify(answers)} */}
               {/* {mark}/{maxMark} */}
-              {mark}/ {maxMark}
+              {displayResult && <CircularProgressBar completionRate={percentage} isPassed={isPassed} />}
             </Typography>
           </Box>
-          <Box sx={{ flexBasis: '50%' }}>
+          <Box sx={{ flexBasis: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <PassedOrFailedBox isPassed={isPassed} />
           </Box>
         </Box>

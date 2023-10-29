@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
  * @version:1.0.0.0
  */
 export default function Clock({ HandleSubmit }) {
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(3600);
   const [time, setTime] = useState(null);
   // Get the time left from localStorage when the component mounts
   useEffect(() => {

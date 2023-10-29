@@ -17,9 +17,19 @@ import React, { useEffect, useState } from 'react';
  * @author:Vi Le
  * @version:1.0.0.0
  */
-export default function CustomQuizCard({ isMultiple, answer, content, onChoice, setAnswers, questionId }) {
+export default function CustomQuizCard({ isMultiple, answer, content, onChoice, setAnswers, questionId, index }) {
   const [result, setResult] = useState({});
   const [selectedValues, setSelectedValues] = useState([]);
+
+  useEffect(() => {
+    //get selectedValue from localStorage
+    const tempselectedValues = localStorage.getItem('selectedValues');
+
+    if (tempselectedValues != null) {
+      setSelectedValues(tempselectedValues.split(','));
+      // setSelectedValues(localStorage.getItem('selectedValues').split(','));
+    }
+  }, []);
 
   const HandleChange = (e) => {
     setResult((pre) => ({
@@ -27,6 +37,9 @@ export default function CustomQuizCard({ isMultiple, answer, content, onChoice, 
       quesId: questionId,
       answerId: e.target.value,
     }));
+    console.log(e);
+    localStorage.setItem(questionId, e.target.value);
+    console.log(index);
     // setAnswers(result);
   };
 
@@ -44,13 +57,18 @@ export default function CustomQuizCard({ isMultiple, answer, content, onChoice, 
       setResult((prev) => ({
         ...prev,
         quesId: questionId,
-        answerId: prev.answerId.filter((value) => value !== e.target.value),
+        answerId: prev.answerId?.filter((value) => value !== e.target.value),
       }));
       // setAnswers(result);
     }
   };
+
   useEffect(() => {
     setAnswers(result);
+    if (selectedValues.length > 0) {
+      localStorage.setItem('selectedValues', selectedValues);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
@@ -85,6 +103,7 @@ export default function CustomQuizCard({ isMultiple, answer, content, onChoice, 
           <RadioGroup
             name="controlled-choice"
             onChange={HandleChange}
+            value={localStorage.getItem(questionId)}
             style={{
               display: 'flex',
               flexFlow: 'row wrap',

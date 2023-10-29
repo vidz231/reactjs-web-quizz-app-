@@ -1,23 +1,25 @@
-import { Box, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 import CustomButton from '../../component/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CustomTextField from '../../component/CustomTextField';
 import { KEY } from '../../const/Domain';
 
 export default function ScreenHome() {
   const [data, setData] = useState('');
-  const [isValid, setIsValid] = useState(true);
-
+  const [isValid, setIsValid] = useState(false);
+  const [key, setKey] = useState('');
+  const [isLogin, setIsLogin] = useState(false);
   const nav = useNavigate();
-  //   const [code, setCode] = useState('');
+  const isFirstRenderRef = useRef(true);
+  const [count, setCount] = useState(0);
 
   //check if the user has the key to access the quiz or not, if not, redirect to the home page
   useEffect(() => {
-    if (!(data === '') && localStorage.getItem('examPw') !== data) {
+    if (!(key === '') && localStorage.getItem('examPw') !== key) {
       localStorage.clear();
     }
-  }, [data]);
+  }, [key]);
 
   const HandleKeyUp = (e) => {
     e.preventDefault();
@@ -26,14 +28,33 @@ export default function ScreenHome() {
   };
 
   const HandleSubmit = (e) => {
-    e.preventDefault(); // Prevent the form from refreshing the page
-    if (data === KEY.find((s) => s === data)) {
+    setIsLogin(true);
+    e.preventDefault();
+    console.log(data.length);
+    console.log(KEY[0].length);
+    console.log(data.length === KEY.length[0]);
+    if (data.length === 36) {
+      import('./HomeService.js').then((fn) => {
+        fn.getKey(data).then((res) => {
+          setKey(res);
+        });
+      });
+    } else {
+      setIsValid(false);
+      setCount((pre) => pre + 1);
+    }
+    setTimeout(() => {
+      setIsLogin(false);
+    }, 2000);
+  };
+  useEffect(() => {
+    if (key) {
       nav(`/quizz/${data}`);
       localStorage.setItem('examPw', data);
     } else {
       setIsValid(false);
     }
-  };
+  }, [key]);
 
   return (
     <>
@@ -59,7 +80,7 @@ export default function ScreenHome() {
           <Box>
             <Typography variant="h4" textAlign={'center'}>
               {' '}
-              Enter Quizz Key To Continue
+              Enter Quiz Key To Continue
             </Typography>
           </Box>
           <form
@@ -67,10 +88,28 @@ export default function ScreenHome() {
             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
           >
             <Box>
-              <CustomTextField label={'enter code'} helper={isValid ? '' : 'Invalid code'} onKeyUp={HandleKeyUp} />
+              <CustomTextField
+                label={'enter code'}
+                isValid={isValid}
+                helper={isValid ? '' : 'Invalid code'}
+                onKeyUp={HandleKeyUp}
+                isLogin={count > 0 ? false : true}
+              />
+
+              {count > 0 && !isLogin && (
+                <Typography variant="p" textAlign={'center'} color={'red'}>
+                  invalid code
+                </Typography>
+              )}
             </Box>
+
             <Box>
-              <CustomButton type="submit" text="login" isSubmit={true} />
+              <CustomButton
+                type="submit"
+                text={isLogin ? <CircularProgress size={'3vh'} color="secondary" /> : 'login'}
+                isSubmit={true}
+                isLogin={count > 0 && isLogin ? true : false}
+              />
             </Box>
           </form>
         </Box>

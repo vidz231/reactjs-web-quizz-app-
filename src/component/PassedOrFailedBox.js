@@ -15,13 +15,23 @@ export default function PassedOrFailedBox({ isPassed }) {
   return (
     <>
       {isPassed ? (
-        <Box sx={{ width: '20vw', height: '10vh', border: 'solid #C10914', display: 'flex', flexDirection: 'row' }}>
+        <Box
+          sx={{
+            width: '20vw',
+            height: '10vh',
+            border: 'solid #C10914',
+            display: 'flex',
+            flexDirection: 'row',
+            borderRadius: '10px',
+          }}
+        >
           {' '}
           <Box sx={{ flexBasis: '30%', justifyContent: 'center', alignItems: 'center' }}>
             <ClearIcon sx={{ fontSize: '10vh', color: '#C10914' }} />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexBasis: '70%' }}>
             <Typography
+              fontSize={'3vw'}
               sx={{
                 color: '#C10914',
 
@@ -33,17 +43,33 @@ export default function PassedOrFailedBox({ isPassed }) {
                 lineHeight: 'normal',
               }}
             >
-              Passed away
+              Failed
             </Typography>
           </Box>
         </Box>
       ) : (
-        <Box sx={{ width: '20vw', height: '10vh', border: 'solid #3D850F', display: 'flex', flexDirection: 'row' }}>
+        <Box
+          sx={{
+            width: '20vw',
+            height: '10vh',
+            border: 'solid #3D850F',
+            display: 'flex',
+            flexDirection: 'row',
+            borderRadius: '10px',
+          }}
+        >
           {' '}
           <Box sx={{ flexBasis: '30%', justifyContent: 'center', alignItems: 'center' }}>
             <CheckIcon sx={{ fontSize: '10vh', color: '#3D850F' }} />
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexBasis: '70%' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexBasis: '70%',
+            }}
+          >
             <Typography
               fontSize={'3vw'}
               sx={{

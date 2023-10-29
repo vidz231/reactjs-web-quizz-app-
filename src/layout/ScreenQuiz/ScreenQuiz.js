@@ -1,7 +1,8 @@
 import { Box, Container, Skeleton, Typography } from '@mui/material';
 import React, { lazy, useEffect, useLayoutEffect, useState, Suspense } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { json, useNavigate, useParams } from 'react-router-dom';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 // import CustomQuizCard from './CustomQuizCard';
 // import Clock from './Clock';
 import ResultUI from './Modal';
@@ -27,12 +28,22 @@ export default function ScreenQuiz() {
   const [maxMark, setMaxMark] = useState(0);
   const [isDisplay, setIsDisplay] = useState(false);
 
+  useEffect(() => {
+    const localAnswer = localStorage.getItem('ans');
+    // setAnswers(JSON.parse(localAnswer));
+    setAnswers(JSON.parse(localAnswer) || []);
+  }, []);
+  //save cuurent user state to local storage
+  useEffect(() => {
+    localStorage.setItem('ans', JSON.stringify(answers));
+  }, [answers]);
+
   /**
    * @description: check if the user has the key to access the quiz or not, if not, redirect to the home page
    * @author: Vi Le
    * @version:1.0.0.0
    */
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!localStorage.getItem('examPw') || quizzKey !== localStorage.getItem('examPw')) {
       nav('/');
     }
@@ -85,8 +96,8 @@ export default function ScreenQuiz() {
    */
   const HandleSubmit = (e) => {
     e.preventDefault();
-    localStorage.clear();
     setIsDisplay(true);
+
     // nav('/');
   };
   const HandleOvertime = () => {
@@ -131,6 +142,12 @@ export default function ScreenQuiz() {
       <Typography variant="h3" textAlign={'center'}>
         {quizzData.title}
       </Typography>
+      <Typography variant="h5" textAlign={'center'} sx={{ marginBottom: '2%' }}>
+        {quizzData.description}
+      </Typography>
+      <Typography variant="h6" textAlign={'center'} sx={{ marginBottom: '2%' }}>
+        Notice: <RadioButtonUncheckedIcon /> is single choices, <CheckBoxOutlineBlankIcon /> is multiple choice
+      </Typography>
       <Container sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
         <Box
           sx={{
@@ -151,6 +168,7 @@ export default function ScreenQuiz() {
                     answer={v.answer}
                     questionId={v.id}
                     content={v.content}
+                    index={i + 1}
                   />
                 </Suspense>
               );
@@ -160,7 +178,7 @@ export default function ScreenQuiz() {
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <CustomButton type="button" text={'submit'} onClick={HandleSubmit} />
       </Box>
-      <ResultUI answers={answers} maxMark={maxMark} displayResult={isDisplay} isSubmit={true} />;
+      {isDisplay && <ResultUI answers={answers} maxMark={maxMark} displayResult={isDisplay} isSubmit={true} />}
     </div>
   );
 }

@@ -1,17 +1,16 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { FormHelperText } from '@mui/material';
 /**
  *
- * @param: label, id, helper, onKeyUp
+ * @param: label, id, onKeyUp
  * @description: This component is used to display the customizable text field
- * @example: <CustomTextField label="Email" id="email" helper="Email is required" onKeyUp={handleEmail} />
+ * @example:  <CustomTextField label={'Enter your name'} id={'name'} onKeyUp={HandleName} />
  * @returns: JSX.Element
  * @author: Vi Le
- * @version:1.0.0.0
+ * @version:1.0.0.2
  */
-export default function CustomTextField({ label, id, helper, onKeyUp }) {
+export default function CustomTextField({ label, id, onKeyUp, isLogin }) {
   return (
     <Box
       sx={{
@@ -21,8 +20,7 @@ export default function CustomTextField({ label, id, helper, onKeyUp }) {
         '& > :not(style)': { m: 1 },
       }}
     >
-      <TextField id={id} label={label} onKeyUp={onKeyUp} sx={{ width: '100%' }} />
-      <FormHelperText style={{ color: 'red' }}>{helper}</FormHelperText>
+      <TextField error={!isLogin} id={id} label={label} onKeyUp={onKeyUp} sx={{ width: '100%' }} />
     </Box>
   );
 }

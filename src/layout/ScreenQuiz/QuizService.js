@@ -60,8 +60,8 @@ export const getExamData = async (quizz) => {
  * @author: vi le
  * @version: 1.0.0.1
  */
-export const getResult = async (answerData) => {
-  const response = await fetch('https://server.nglearns.com/quizz/285498f5-3486-434d-a459-bedb6bcea7ce', {
+export const getResult = async (answerData, quizzKey) => {
+  const response = await fetch(`https://server.nglearns.com/answer/${quizzKey}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -74,6 +74,7 @@ export const getResult = async (answerData) => {
   }
 
   const data = await response.json();
+
   return data;
 };
 /***
