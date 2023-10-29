@@ -40,15 +40,6 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
    * @author: Vi Le
    * @version:1.0.0.0
    */
-  // useEffect(() => {
-  //   import('./QuizService').then((fn) => {
-  //     fn.getTempResult(answers).then((res) => {
-  //       setMark(res.mark);
-  //     });
-  //   });
-
-  //   // setIsPassed(mark > 10 / 2);
-  // }, []);
   useEffect(() => {
     import('./QuizService').then((fn) => {
       fn.getTempResult(answers).then((res) => {
@@ -57,10 +48,9 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
     });
   }, [answers]);
   /**
-   * @param: mark:Number
-   * @description: check if the user has passed the quiz or not, if not, set the isPassed to false, otherwise, set it to true
-   * @author:Vi Le
-   * @version: 1.0.0.0
+   * @description: check if the user has passed the quiz or not and set the result for the quiz
+   * @author: Vi Le
+   * @version:1.0.0.1
    */
   useEffect(() => {
     setIsPassed(mark <= Math.floor(maxMark / 2));

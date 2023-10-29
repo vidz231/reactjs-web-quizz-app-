@@ -10,6 +10,15 @@ import CustomButton from '../../component/CustomButton';
 const Clock = lazy(() => import('./Clock'));
 const LinearDeterminate = lazy(() => import('../../component/SliderProgress'));
 const CustomQuizCard = lazy(() => import('./CustomQuizCard'));
+
+/**
+ *
+ * @description: this function is used to display the quiz screen
+ * @returns: JSX.Element
+ * @author: Vi Le
+ * @version: 1.0.0.0
+ */
+
 export default function ScreenQuiz() {
   const nav = useNavigate();
   const { quizzKey } = useParams();
@@ -80,6 +89,9 @@ export default function ScreenQuiz() {
     setIsDisplay(true);
     // nav('/');
   };
+  const HandleOvertime = () => {
+    setIsDisplay(true);
+  };
   /**
    * @description: this useEffect is used to check the answer state
    * @returns: void
@@ -114,7 +126,7 @@ export default function ScreenQuiz() {
           />
         }
       >
-        {!isDisplay && <Clock HandleSubmit={HandleSubmit} quizzKey={quizzKey} />}
+        {!isDisplay && <Clock HandleSubmit={HandleOvertime} quizzKey={quizzKey} />}
       </Suspense>
       <Typography variant="h3" textAlign={'center'}>
         {quizzData.title}
@@ -146,11 +158,9 @@ export default function ScreenQuiz() {
         </Box>
       </Container>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <Button onClick={HandleSubmit}>click me to submit</Button> */}
         <CustomButton type="button" text={'submit'} onClick={HandleSubmit} />
       </Box>
       <ResultUI answers={answers} maxMark={maxMark} displayResult={isDisplay} isSubmit={true} />;
-      {/* <input type="submit" value="handin" /> */}
     </div>
   );
 }

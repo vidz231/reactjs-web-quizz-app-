@@ -11,16 +11,20 @@ export default function ScreenHome() {
 
   const nav = useNavigate();
   //   const [code, setCode] = useState('');
+
+  //check if the user has the key to access the quiz or not, if not, redirect to the home page
   useEffect(() => {
     if (!(data === '') && localStorage.getItem('examPw') !== data) {
       localStorage.clear();
     }
   }, [data]);
+
   const HandleKeyUp = (e) => {
     e.preventDefault();
     console.log(e);
     setData(e.target.value);
   };
+
   const HandleSubmit = (e) => {
     e.preventDefault(); // Prevent the form from refreshing the page
     if (data === KEY.find((s) => s === data)) {

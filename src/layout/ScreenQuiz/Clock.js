@@ -1,25 +1,25 @@
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 /**
- * @param: none
+ * @param: HandleSubmit:Function
  * @example: <Clock/>
- * @description: This component is used to display a clock on the screen
+ * @description: This component is used to display a clock timer on the screen
  * @returns: JSX.Element
  * @author: Vi Le
  * @version:1.0.0.0
  */
-export default function Clock() {
-  const [timer, setTimer] = useState(3600);
+export default function Clock({ HandleSubmit }) {
+  const [timer, setTimer] = useState(10);
+  const [time, setTime] = useState(null);
+  // Get the time left from localStorage when the component mounts
   useEffect(() => {
-    // Get the time left from localStorage when the component mounts
     const storedTime = localStorage.getItem('timeLeft');
-
-    // If there's a stored time and it's not NaN or negative, use it
     if (storedTime && !isNaN(storedTime) && Number(storedTime) > 0) {
       setTimer(Number(storedTime));
     }
   }, []);
 
+  // Update the timer every second
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((pre) => {
@@ -35,13 +35,23 @@ export default function Clock() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Format the time left into mm:ss
   const minutes = Math.floor(timer / 60);
   const seconds = timer % 60;
   useEffect(() => {
+    import('../../utils/StringUtils').then((StringUtils) => {
+      const formattedTime = StringUtils.formatTime(minutes, seconds);
+      setTime(formattedTime);
+    });
+  }, [minutes, seconds]);
+
+  // When the timer reaches 0, submit the quiz
+  useEffect(() => {
     if (timer === 0) {
-      console.log('submit');
+      HandleSubmit();
     }
-  }, [timer]);
+  }, [timer, HandleSubmit]);
 
   return (
     <>
@@ -55,9 +65,9 @@ export default function Clock() {
           border: 'solid #623F1F thick',
           top: '5%',
           right: '2%',
-          display: 'flex', // Add this
-          alignItems: 'center', // Add this
-          justifyContent: 'center', // Add this
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           bgcolor: 'white',
         }}
       >
@@ -66,12 +76,11 @@ export default function Clock() {
           textAlign={'center'}
           sx={{
             display: 'flex',
-            fontSize: '3vw', // Adjust this as needed
-            lineHeight: '1', // Adjust this as needed
+            fontSize: '3vw',
+            lineHeight: '1',
           }}
         >
-          {minutes}:{seconds}
-          {/* <Countdown  date={Date.now() + 100000} /> */}
+          {time}
         </Typography>
       </Box>
     </>

@@ -90,7 +90,7 @@ export const getResult = async (answerData) => {
     });
   }, []);
  * @returns:json
- * @description: this function will give you the result mark
+ * @description: this function will give you the temporary result mark
  * @author: Vi Le
  * @version: 1.0.0.2
  */
