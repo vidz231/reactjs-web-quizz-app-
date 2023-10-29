@@ -1,7 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-
-export default function Clock({ HandleSubmit, quizzKey }) {
+/**
+ * @param: none
+ * @example: <Clock/>
+ * @description: This component is used to display a clock on the screen
+ * @returns: JSX.Element
+ * @author: Vi Le
+ * @version:1.0.0.0
+ */
+export default function Clock() {
   const [timer, setTimer] = useState(3600);
   useEffect(() => {
     // Get the time left from localStorage when the component mounts

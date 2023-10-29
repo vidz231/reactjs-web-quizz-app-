@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import PassedOrFailedBox from '../../component/PassedOrFailedBox';
 
 const style = {
   position: 'absolute',
@@ -23,16 +24,47 @@ const style = {
   flexFlow: 'column',
   alignItems: ' center',
 };
-
+/**
+ * @param: answers: Array, maxMark: Number, displayResult: Boolean
+ * @example: <ResultUI answers={answers} maxMark={maxMark} displayResult={displayResult} />
+ * @description: this component is used to display the result of the quiz after the user has submitted the answer
+ * @example: <ResultUI answers={answers} maxMark={maxMark} displayResult={displayResult} />
+ * @author:vi le
+ * @returns: JSX.Element
+ */
 export default function ResultUI({ answers, maxMark, displayResult }) {
   const [mark, setMark] = useState(0);
+  const [isPassed, setIsPassed] = useState(true);
+  /**
+   * @description: get the result from the backend and set the mark for the quiz
+   * @author: Vi Le
+   * @version:1.0.0.0
+   */
+  // useEffect(() => {
+  //   import('./QuizService').then((fn) => {
+  //     fn.getTempResult(answers).then((res) => {
+  //       setMark(res.mark);
+  //     });
+  //   });
+
+  //   // setIsPassed(mark > 10 / 2);
+  // }, []);
   useEffect(() => {
     import('./QuizService').then((fn) => {
       fn.getTempResult(answers).then((res) => {
         setMark(res.mark);
       });
     });
-  }, []);
+  }, [answers]);
+  /**
+   * @param: mark:Number
+   * @description: check if the user has passed the quiz or not, if not, set the isPassed to false, otherwise, set it to true
+   * @author:Vi Le
+   * @version: 1.0.0.0
+   */
+  useEffect(() => {
+    setIsPassed(mark <= Math.floor(maxMark / 2));
+  }, [mark, maxMark]);
   return (
     <>
       <Modal open={displayResult} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -40,14 +72,12 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
           <Box sx={{ flexBasis: '50%' }}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {/* {JSON.stringify(answers)} */}
-              {mark}/{maxMark}
+              {/* {mark}/{maxMark} */}
+              {mark}/ {10}
             </Typography>
           </Box>
           <Box sx={{ flexBasis: '50%' }}>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              hehe
-              {maxMark}
-            </Typography>
+            <PassedOrFailedBox isPassed={isPassed} />
           </Box>
         </Box>
       </Modal>

@@ -1,4 +1,4 @@
-import { Box, Button, Container, Skeleton, Typography } from '@mui/material';
+import { Box, Container, Skeleton, Typography } from '@mui/material';
 import React, { lazy, useEffect, useLayoutEffect, useState, Suspense } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -18,6 +18,11 @@ export default function ScreenQuiz() {
   const [maxMark, setMaxMark] = useState(0);
   const [isDisplay, setIsDisplay] = useState(false);
 
+  /**
+   * @description: check if the user has the key to access the quiz or not, if not, redirect to the home page
+   * @author: Vi Le
+   * @version:1.0.0.0
+   */
   useLayoutEffect(() => {
     if (!localStorage.getItem('examPw') || quizzKey !== localStorage.getItem('examPw')) {
       nav('/');
@@ -26,7 +31,11 @@ export default function ScreenQuiz() {
       nav('*');
     }
   }, [nav, quizzKey]);
-
+  /**
+   * @description: get the data from the backend and set the data for the quiz
+   * @author:Vi Le
+   * @version:1.0.0.0
+   */
   useEffect(() => {
     import('./QuizService.js').then((d) => {
       d.getExamData(quizzKey).then((data) => {
@@ -35,6 +44,15 @@ export default function ScreenQuiz() {
       });
     });
   }, [quizzKey, nav]);
+  /**
+   *
+   * @param : answer:json
+   * @example
+   * @description: this function is used to set the answer for the quiz
+   * @returns: void
+   * @author:Vi LE
+   * @version:1.0.0.0
+   */
 
   const HandleChoice = (answer) => {
     setAnswers((prev) => {
@@ -50,14 +68,22 @@ export default function ScreenQuiz() {
       }
     });
   };
-
+  /**
+   *
+   * @param: e: event
+   * @example:
+   * @description: this function is used to submit the answer to the backend and open the result modal
+   */
   const HandleSubmit = (e) => {
     e.preventDefault();
     localStorage.clear();
     setIsDisplay(true);
     // nav('/');
   };
-
+  /**
+   * @description: this useEffect is used to check the answer state
+   * @returns: void
+   */
   useEffect(() => {
     console.log('hereis the answer' + JSON.stringify(answers));
   }, [answers]);

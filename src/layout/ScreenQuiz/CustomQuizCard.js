@@ -9,7 +9,14 @@ import {
   RadioGroup,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-
+/**
+ * @param: isMultiple, answer, content, onChoice, setAnswers, questionId
+ * @example: <CustomQuizCard isMultiple={false} answer={answer} content={content} onChoice={HandleChoice} setAnswers={setAnswers} questionId={questionId} />
+ * @description: this component is used to display the question and the answer for the quiz
+ * @returns: JSX.Element
+ * @author:Vi Le
+ * @version:1.0.0.0
+ */
 export default function CustomQuizCard({ isMultiple, answer, content, onChoice, setAnswers, questionId }) {
   const [result, setResult] = useState({});
   const [selectedValues, setSelectedValues] = useState([]);
@@ -44,6 +51,7 @@ export default function CustomQuizCard({ isMultiple, answer, content, onChoice, 
   };
   useEffect(() => {
     setAnswers(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
   return (

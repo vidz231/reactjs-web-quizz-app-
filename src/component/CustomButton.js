@@ -22,8 +22,12 @@ const theme = createTheme({
 });
 /**
  *
- * @param text,type,isSubmit
- * @returns
+ * @param: text, type, isSubmit, onClick
+ * @example: <CustomButton type="button" text={'submit'} onClick={HandleSubmit} />
+ * @description: This component is used to display the customizable button
+ * @returns : JSX.Element
+ * @author: Vi Le
+ * @version:1.0.0.0
  */
 export default function CustomButton({ text, type, isSubmit, onClick }) {
   return (

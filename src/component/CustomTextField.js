@@ -4,7 +4,10 @@ import TextField from '@mui/material/TextField';
 import { FormHelperText } from '@mui/material';
 /**
  *
- * @param :label, id, helper
+ * @param: label, id, helper, onKeyUp
+ * @description: This component is used to display the customizable text field
+ * @example: <CustomTextField label="Email" id="email" helper="Email is required" onKeyUp={handleEmail} />
+ * @returns: JSX.Element
  * @returns
  */
 export default function CustomTextField({ label, id, helper, onKeyUp }) {

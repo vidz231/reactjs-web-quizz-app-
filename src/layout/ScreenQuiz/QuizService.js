@@ -23,7 +23,7 @@ export const getExamKey = async () => {
   return examKey;
 };
 /***
- * @param :quizz:string
+ * @param: quizz:string
  * quizz is the key to acc the quizz
  * @example
  * const[data,setData] = ([])
@@ -33,9 +33,9 @@ export const getExamKey = async () => {
  * })
  *
  * })
- * @description: return the json data
+ * @description: this function will return the data of the quiz
  * @author: vile
- * @version: 1.0.0.2
+ * @version: 1.0.0.3
  */
 export const getExamData = async (quizz) => {
   let res = await fetch(CUSTOMER_DOMAIN + `${quizz}`);
@@ -45,7 +45,7 @@ export const getExamData = async (quizz) => {
 };
 /***
  * this function is used to get the mark from the server
- * @param answerData:json array
+ * @param: answerData:json array
  * 
  * @example
  * const[mark,setMark] = useState(0)
@@ -57,8 +57,8 @@ export const getExamData = async (quizz) => {
     });
   }, []);
  * @description: this function will give u the result mark
- * @author: vile
- * @version: 1.0.0.0
+ * @author: vi le
+ * @version: 1.0.0.1
  */
 export const getResult = async (answerData) => {
   const response = await fetch('https://server.nglearns.com/quizz/285498f5-3486-434d-a459-bedb6bcea7ce', {
@@ -78,7 +78,7 @@ export const getResult = async (answerData) => {
 };
 /***
  * this function is used to get the mark from the server
- * @param answerData:json array
+ * @param: answerData:json array
  * 
  * @example
  * const[mark,setMark] = useState(0)
@@ -89,10 +89,10 @@ export const getResult = async (answerData) => {
       });
     });
   }, []);
- * @returns:Num -will return a random mark
- * @description: this function will give u the result mark
- * @author: vile
- * @version: 1.0.0.1
+ * @returns:json
+ * @description: this function will give you the result mark
+ * @author: Vi Le
+ * @version: 1.0.0.2
  */
 export const getTempResult = async (answerData) => {
   const res = await fetch(SERVER_DOMAIN + '/result');
