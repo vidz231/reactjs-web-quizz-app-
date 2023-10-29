@@ -63,7 +63,7 @@ export default function ResultUI({ answers, maxMark, displayResult }) {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               {/* {JSON.stringify(answers)} */}
               {/* {mark}/{maxMark} */}
-              {mark}/ {10}
+              {mark}/ {maxMark}
             </Typography>
           </Box>
           <Box sx={{ flexBasis: '50%' }}>

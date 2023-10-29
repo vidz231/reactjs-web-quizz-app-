@@ -1,5 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import React from 'react';
+import CustomButton from './CustomButton';
 /**
  * @param : none
  * @example : <ErrorPage />
@@ -11,10 +12,24 @@ import React from 'react';
 export default function ErrorPage() {
   return (
     <>
-      <Container sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Container
+        sx={{
+          height: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
         <Typography color={'red'} variant="h1">
-          ERROR PAGE :-(
+          😭 PAGE NOT FOUND 😭
         </Typography>
+        <CustomButton
+          text={'Go back to home page'}
+          type={'button'}
+          isSubmit={false}
+          onClick={() => window.location.replace('/')}
+        />
       </Container>
     </>
   );
